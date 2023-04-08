@@ -1,10 +1,15 @@
 package com.example.inflearnquerydslyounghankim;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.example.inflearnquerydslyounghankim.entity.Member;
+import com.example.inflearnquerydslyounghankim.entity.QMember;
 import com.example.inflearnquerydslyounghankim.entity.Team;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +36,30 @@ public class QuerydslTest {
         em.persist(member2);
         em.persist(member3);
         em.persist(member4);
+    }
+
+    @Test
+    void jpqlTest() {
+        // find member entity
+        String query = "select m from Member m " + "where m.username = :username";
+
+        Member findMember = em.createQuery(query, Member.class)
+            .setParameter("username", "member1")
+            .getSingleResult();
+
+        assertThat(findMember.getUsername()).isEqualTo("member1");
+    }
+
+    @Test
+    void queryDslTest() {
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
+        QMember member = new QMember("m");
+
+        Member findMember = jpaQueryFactory.select(member)
+            .from(member)
+            .where(member.username.eq("member1"))
+            .fetchOne();
+
+        assertThat(findMember.getUsername()).isEqualTo("member1");
     }
 }
