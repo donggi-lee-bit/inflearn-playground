@@ -1,5 +1,6 @@
 package com.example.inflearnquerydslyounghankim;
 
+import static com.example.inflearnquerydslyounghankim.entity.QMember.member;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.inflearnquerydslyounghankim.entity.Member;
@@ -58,6 +59,17 @@ public class QuerydslTest {
     void queryDslTest() {
         QMember member = new QMember("m");
 
+        Member findMember = jpaQueryFactory
+            .select(member)
+            .from(member)
+            .where(member.username.eq("member1"))
+            .fetchOne();
+
+        assertThat(findMember.getUsername()).isEqualTo("member1");
+    }
+
+    @Test
+    void queryDslTest2() {
         Member findMember = jpaQueryFactory
             .select(member)
             .from(member)
