@@ -20,8 +20,12 @@ public class QuerydslTest {
     @PersistenceContext
     EntityManager em;
 
+    JPAQueryFactory jpaQueryFactory;
+
     @BeforeEach
     void before() {
+        jpaQueryFactory = new JPAQueryFactory(em);
+
         Team teamA = new Team("teamA");
         Team teamB = new Team("teamB");
         em.persist(teamA);
@@ -52,10 +56,10 @@ public class QuerydslTest {
 
     @Test
     void queryDslTest() {
-        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         QMember member = new QMember("m");
 
-        Member findMember = jpaQueryFactory.select(member)
+        Member findMember = jpaQueryFactory
+            .select(member)
             .from(member)
             .where(member.username.eq("member1"))
             .fetchOne();

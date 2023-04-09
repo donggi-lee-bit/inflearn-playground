@@ -20,3 +20,11 @@ spring boot 버전 2.6 이상, querydsl 5.0 환경 설정 방법이 다르다. q
 확인
 - build > generated > querydsl
   - Q class 생성되어 있어야함 
+
+## JPAQueryFactory
+
+### JPAQueryFactory 필드 사용
+
+테스트 시 `JPAQueryFactory` 를 필드에 두고, `@BeforeEach` 에서 초기화 해주도록 한다. 이 때 동시성 문제는?
+- `JPAQueryFactory` 를 생성할 때 제공하는 `EntityManager` 에 달려있다
+- 스프링 프레임워크는 여러 스레드에서 동시에 같은 `EntityManager` 에 접근해도 트랜잭션마다 별도의 영속성 컨텍스트를 제공하기 때문에 동시성 문제는 걱정하지 않아도 됨
