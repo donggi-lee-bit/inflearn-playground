@@ -1,4 +1,4 @@
-package com.example.stock.service;
+package com.example.stock.facade;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
