@@ -14,3 +14,21 @@
 - 결국 다시 `race condition` 이 발생
 - 실제 운영 환경에서는 서버를 1대만 사용하지 않기에 `syncronized` 키워드로 동시성을 해결하기에는 문제가 있다. 
 
+## Database 를 활용하여 데이터 정합성을 맞추는 방법
+
+<b>Pessimistic Lock(exclusive lock)</b>
+비관적 락
+
+- 다른 트랜잭션이 특정 행의 lock 을 얻는 것을 방지
+  - A 트랜잭션이 끝날 때까지 기다렸다가 B 트랜잭션이 lock 을 획득
+  - 특정 행을 업데이트 하거나 삭제할 수 있음
+  - 일반적인 조회는 별다른 lock 없이 수행 가능
+
+<b>Optimistic Lock</b> 낙관적 락
+
+
+- lock 을 걸지 않고 문제가 발생할 때 처리
+  - 대표적으로 version column 을 만들어 해결할 수 있음
+
+<b>Named Lock</b>
+- 이름과 함께 lock 획득. 해당 lock 은 다른 세션에서 획득 및 해제가 불가능하도록 동작.
