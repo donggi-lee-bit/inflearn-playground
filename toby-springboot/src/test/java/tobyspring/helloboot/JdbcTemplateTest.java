@@ -5,11 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.annotation.Rollback;
 
-@HellobootTest
 // @Rollback(value = false) // 트랜잭션의 롤백 기능을 끌 수 있다
+@JdbcTest
 public class JdbcTemplateTest {
 
     @Autowired
